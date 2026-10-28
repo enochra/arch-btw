@@ -14,3 +14,4 @@ compinit
 #
 
 PROMPT='[%F{green}%n@%m%f %F{blue}%~%f]%(!.#.$) '
+alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
