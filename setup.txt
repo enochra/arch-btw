@@ -1,0 +1,59 @@
+
+1. Install an AUR Helper & Base Packages
+
+Your dotfiles rely on programs like sway, waybar, and kitty already existing on the system. First, ensure your system is updated and pull in your packages.
+If you use yay, run:
+bash
+# Install yay dependencies
+sudo pacman -S --needed base-devel git
+
+# Build and install yay
+git clone https://archlinux.org && cd yay && makepkg -si && cd .. && rm -rf yay
+
+# Install your core environment packages
+yay -S sway waybar rofi kitty zsh bash-completion
+Use code with caution.
+If you use paru, run:
+bash
+# Install paru dependencies
+sudo pacman -S --needed base-devel git
+
+# Build and install paru
+git clone https://archlinux.org && cd paru && makepkg -si && cd .. && rm -rf paru
+
+# Install your core environment packages
+paru -S sway waybar rofi kitty zsh bash-completion
+Use code with caution.
+
+2. Run the Drop-In Recovery Commands
+
+Once your packages are installed, paste this exact block into your terminal to safely pull down and unpack your configuration files from GitHub:
+bash
+# 1. Pull down your repository structure into a bare format
+git clone --bare https://github.com $HOME/.dotfiles
+
+# 2. Define a temporary alias for this shell session
+alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+# 3. Wipe out the generic stock configs that Arch packages automatically generate
+rm -f ~/.bashrc ~/.bash_profile ~/.zshrc ~/.zprofile
+
+# 4. Extract and deploy your actual configurations straight into your home folder
+dot checkout
+
+# 5. Hide home directory clutter from your git status commands
+dot config --local status.showUntrackedFiles no
+Use code with caution.
+
+3. Launch Your Restored Environment
+
+Because your .zshrc and .bashrc updates were just unpacked, the permanent dot alias is already written to them.
+To activate everything:
+1. Switch your default shell to Zsh (if you haven't already):bash
+chsh -s $(which zsh)
+Use code with caution.
+2. Reload your terminal or open a new shell instance:bash
+zsh
+Use code with caution.
+3. Launch Sway to jump straight back into your exact desktop environment:bash
+sway
